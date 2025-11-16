@@ -3,11 +3,14 @@
 #include <atomic>
 #include <thread>
 #include <cstdint>
+#include <iostream>
 
 // align to cache lines size to reduce cache miss 
 struct AlignedAtomic {
     alignas(128) std::atomic<uint64_t> counter = 0;
 };
+
+// g++ no_sharing_cache.cpp -o build/no_sharing -O3 -lpthread -std=c++20
 
 int main() {
 
@@ -15,7 +18,7 @@ int main() {
     constexpr uint8_t num_threads = 4;
     constexpr uint64_t elements_per_threads = num_iter/num_threads;
     
-    std::atomic<uint64_t> final = 0;
+    uint64_t final {0};
     std::array<AlignedAtomic, num_threads> counters; // array of 128 bytes aligned atomic counter
 
     // lambda per thread
@@ -29,5 +32,11 @@ int main() {
     for (uint8_t i=0 ; i < num_threads; i++) 
         threads.emplace_back(work, i);
 
+    for (auto &thread: threads) thread.join();
+
+    // wait all threads to join to calc final
+    for (auto &counter: counters) final += counter.counter.load();
+
+    std::cout << "total counters = " << final << std::endl;
     return 0;
 }

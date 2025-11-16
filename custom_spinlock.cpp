@@ -70,6 +70,7 @@ void custom_spinlock(std::array<Padded, num_of_threads> &max_wait) {
     for (uint8_t i=0; i< num_of_threads; i++) 
         threads.emplace_back(work, i);
 
+    // join in jthread destructor when going out of scope
 }
 
 int main() {
