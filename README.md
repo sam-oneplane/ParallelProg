@@ -3,7 +3,7 @@
 
 ``` perf stat -d ./obj-file ```
 
-
+#### cache records
 ``` perf c2c record ./obj-file ```
 ``` perf c2c report ```
 
@@ -13,6 +13,11 @@
 
 ####  command line flags :
 ``` -ftree-vectorize : enable simd vectorization ```
+
+#### dump assembly 
+``` objdump -dC ./binary_file ```
+
+
 
 
 

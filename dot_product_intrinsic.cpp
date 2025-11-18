@@ -4,6 +4,7 @@
 #include <random>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 
 // g++ dot_product_intrinsic.cpp -o build/vec_intrinsic -O3  -std=c++20 -lbenchmark -lpthread -march=native
 
@@ -47,6 +48,7 @@ static void dp_intrinsics(benchmark::State &s) {
 
     free(v1);
     free(v2);
+    std::cout << *result << std::endl;
 }
 
 BENCHMARK(dp_intrinsics)->Unit(benchmark::kMicrosecond)->UseRealTime();

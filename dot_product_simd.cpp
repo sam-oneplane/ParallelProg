@@ -33,7 +33,8 @@ static void dp_bench( benchmark::State &s) {
     for (auto _: s) {
         // perform dot product of v1 & v2 using transform reduce
         *sink = std::transform_reduce(std::execution::unseq, v1.begin(), v1.end(), v2.begin(), 0.0f);
-    }    
+    }  
+    std::cout << *sink << std::endl;  
 }
 
 BENCHMARK(dp_bench)->Unit(benchmark::kMicrosecond)->UseRealTime();

@@ -18,7 +18,7 @@ static void openmp_bl(benchmark::State &s) {
     std::vector<float> v_out(lsize);
 
     for (auto _: s) {
-        // openmp c++11 attribute 
+        // openmp c++11 attribute (replace #pragma omp parallel for)
         [[omp::sequence(directive(parallel), directive(for))]]
         for (int i=0; i < lsize; i++ )
             v_out[i] = v_in[i] * v_in[i];
